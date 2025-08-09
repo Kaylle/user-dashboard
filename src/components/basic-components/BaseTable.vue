@@ -280,7 +280,7 @@ import { Input } from "../ui/input";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationNext, PaginationPrevious } from "../ui/pagination";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuCheckboxItem, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuItem } from "../ui/dropdown-menu";
 import { ref, computed, onMounted } from "vue";
-import type { ColumnType } from "@/lib/models.ts";
+import type { ColumnType } from "../../lib/models.ts";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
 import { Badge } from "../../components/ui/badge";
 import users from "../../lib/data.json";

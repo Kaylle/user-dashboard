@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { cva } from "class-variance-authority";
 import { computed } from "vue";
-import type { KbdProps } from "@/lib/models.ts";
+import type { KbdProps } from "../../lib/models.ts";
 
 const props = withDefaults(defineProps<KbdProps>(), {
   as: 'kbd',

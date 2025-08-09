@@ -98,8 +98,8 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { PhCaretUp, PhFile, PhLock, PhHouse, PhImage } from "@phosphor-icons/vue";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { useRouter } from "vue-router";
-import { navMenu } from "@/lib/constants.ts";
-import type {UserType} from "@/lib/models.ts";
+import { navMenu } from "../../lib/constants.ts";
+import type {UserType} from "../../lib/models.ts";
 
 const router = useRouter();
 
@@ -112,7 +112,7 @@ const icons = {
 const user = {
   fullName: 'Kate Kaylle',
   email: 'kurkina.ee@gmail.com',
-  avatar: '/vite.svg',
+  avatar: '/icons/favicon-32x-32.png',
   phone: '',
   id: '1',
   position: 'front-end developer',
