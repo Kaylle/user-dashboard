@@ -68,8 +68,8 @@
 </template>
 
 <script setup lang="ts">
-import users from "../lib/data.json";
-import { Card, CardHeader, CardContent, CardTitle } from "../components/ui/card";
+import users from "../../lib/data.json";
+import { Card, CardHeader, CardContent, CardTitle } from "../ui/card";
 import { PhCheckSquare, PhProhibitInset, PhTrash, PhUsers } from "@phosphor-icons/vue";
 import { ref, onMounted } from "vue";
 

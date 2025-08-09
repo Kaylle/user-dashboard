@@ -1,14 +1,14 @@
 export interface KbdProps {
-  as?: string
-  size?: 'xs' | 'sm' | 'md'
+  as?: string;
+  size?: 'xs' | 'sm' | 'md';
 }
 
 export interface ColumnType {
-  label: string,
-  value: string,
-  sortable?: boolean,
-  isVisible?: boolean,
-  type?: string
+  label: string;
+  value: string;
+  sortable?: boolean;
+  isVisible?: boolean;
+  type?: string;
 }
 
 export interface UserType {
@@ -19,4 +19,16 @@ export interface UserType {
   avatar: string;
   position: string;
   status: string;
+}
+
+export interface FilterType {
+  name: string;
+  values: FilterValueType[];
+}
+
+export interface FilterValueType {
+  name: string;
+  val: boolean;
+  caption?: string;
+  icon?: object;
 }

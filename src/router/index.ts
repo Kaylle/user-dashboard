@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '../pages/MainPage.vue';
 import LoginPage from '../pages/LoginPage.vue';
 import EmptyPage from '../pages/EmptyPage.vue';
-import MainLayout from "../components/MainLayout.vue";
+import MainLayout from "../components/main-layout/MainLayout.vue";
 
 const routes = [
   { path: '/login', component: LoginPage },

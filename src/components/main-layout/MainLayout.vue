@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { SidebarInset, SidebarProvider } from "./ui/sidebar";
-import BaseSidebar from "./main-layout/BaseSidebar.vue";
-import BaseHeader from "./main-layout/BaseHeader.vue";
+import { SidebarInset, SidebarProvider } from "../ui/sidebar";
+import BaseSidebar from "./BaseSidebar.vue";
+import BaseHeader from "./BaseHeader.vue";
 </script>

@@ -112,7 +112,7 @@ const icons = {
 const user = {
   fullName: 'Kate Kaylle',
   email: 'kurkina.ee@gmail.com',
-  avatar: '/icons/favicon-32x-32.png',
+  avatar: '/icons/favicon-32x32.png',
   phone: '',
   id: '1',
   position: 'front-end developer',

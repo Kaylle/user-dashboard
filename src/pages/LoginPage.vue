@@ -103,7 +103,7 @@ const authForm = ref({
 })
 
 const login = () => {
-  if (authForm.value.email !== 'm@example.com' || authForm.value.password !=='0000')
+  if (authForm.value.email !== 'kurkina.ee@gmail.com' || authForm.value.password !=='0000')
     return toast.error('Error!', {
       description: 'Wrong email or password!'
     });

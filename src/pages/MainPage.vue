@@ -24,9 +24,12 @@
           </div>
         </div>
         <BaseTable
+          actions
           :data="users.data"
           :columns="userColumns"
           @row-click="showPopup"
+          uupdate-filters="(n:FilterType)=>filters.find(x=>x.name===n.name)?.values.find(x=>x.name===n.name).val=n.val"
+          :filters="filters"
         />
         <Dialog v-model:open="openPopup">
           <DialogContent class="sm:max-w-[425px]">
@@ -112,10 +115,11 @@ import { Label } from "../components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
 import { ref } from "vue";
 import { toast } from "vue-sonner";
-import type { UserType } from "../lib/models.ts";
+import type {FilterType, UserType} from "../lib/models.ts";
 import { userColumns } from "../lib/constants.ts";
-import StatisticSection from "../components/StatisticSection.vue";
+import StatisticSection from "../components/basic-components/StatisticSection.vue";
 import { downloadTable } from "../lib/utils.ts";
+import {PhCheckSquare, PhProhibitInset, PhTrash} from "@phosphor-icons/vue";
 
 const openPopup = ref(false);
 
@@ -128,6 +132,32 @@ const popupData = ref({
   avatar: '',
   phone: ''
 } as UserType);
+
+const filters = ref([
+  {
+    name: 'status',
+    values: [
+      {
+        val: false,
+        name: "active",
+        caption: users.data.filter(x=>x.status==='active').length.toString(),
+        icon: PhCheckSquare
+      },
+      {
+        val: false,
+        name: "blocked",
+        caption: users.data.filter(x=>x.status==='blocked').length.toString(),
+        icon: PhProhibitInset
+      },
+      {
+        val: false,
+        name: "deleted",
+        caption: users.data.filter(x=>x.status==='deleted').length.toString(),
+        icon: PhTrash
+      }
+    ]
+  }
+] as FilterType[])
 
 const downloadUserTable = () => {
   const columnsStr = userColumns.map((e) => e.label).join(";");
