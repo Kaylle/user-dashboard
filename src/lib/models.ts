@@ -7,6 +7,7 @@ export interface ColumnType {
   label: string;
   value: string;
   sortable?: boolean;
+  sortMode?: number;
   isVisible?: boolean;
   type?: string;
 }

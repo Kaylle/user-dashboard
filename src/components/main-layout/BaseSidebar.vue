@@ -26,17 +26,25 @@
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            <SidebarMenuItem
-              v-for="(nav, indexGroup) in navMenu"
-              :key="indexGroup"
+            <SidebarGroup
+              v-for="group in new Set(navMenu.map(x=>x.group))"
+              :key="group"
             >
-              <SidebarMenuButton asChild>
-                <a :href="nav.url">
-                  <component :is="icons[nav.icon]" />
-                  <span>{{ nav.title}} </span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+              <SidebarGroupLabel>
+                {{ group }}
+              </SidebarGroupLabel>
+              <SidebarMenuItem
+                v-for="(nav, indexGroup) in navMenu.filter(x=>x.group === group)"
+                :key="indexGroup"
+              >
+                <SidebarMenuButton asChild>
+                  <a :href="nav.url">
+                    <component :is="icons[nav.icon]" />
+                    <span>{{ nav.title}} </span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarGroup>
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
@@ -74,13 +82,16 @@
               side="top"
               class="w-[--reka-popper-anchor-width]"
             >
-              <DropdownMenuItem disabled>
+              <DropdownMenuItem>
+                <PhUserCircleGear/>
                 <span>Account</span>
               </DropdownMenuItem>
-              <DropdownMenuItem disabled>
+              <DropdownMenuItem>
+                <PhGearSix/>
                 <span>Settings</span>
               </DropdownMenuItem>
               <DropdownMenuItem @click="logout">
+                <PhSignOut/>
                 <span>Sign out</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -95,11 +106,12 @@
 <script setup lang="ts">
 import { Sidebar, SidebarContent, SidebarGroup, SidebarHeader, SidebarFooter, SidebarRail, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "../ui/sidebar";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "../ui/dropdown-menu";
-import { PhCaretUp, PhFile, PhLock, PhHouse, PhImage } from "@phosphor-icons/vue";
+import {PhCaretUp, PhFile, PhLock, PhHouse, PhImage, PhUserCircleGear, PhGearSix, PhSignOut} from "@phosphor-icons/vue";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { useRouter } from "vue-router";
 import { navMenu } from "../../lib/constants.ts";
 import type {UserType} from "../../lib/models.ts";
+import {SidebarGroupLabel, SidebarSeparator} from "@/components/ui/sidebar";
 
 const router = useRouter();
 

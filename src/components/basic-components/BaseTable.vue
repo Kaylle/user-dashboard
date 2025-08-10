@@ -14,11 +14,13 @@
               v-for="column in visibleColumns"
               :key="column.value"
             >
-              <DropdownMenu>
+              <DropdownMenu v-if="column.sortable">
                 <DropdownMenuTrigger as-child>
                   <Button variant="ghost">
                     {{ column.label }}
-                    <PhArrowUp/>
+                    <PhArrowUp v-if="column.sortMode===1" />
+                    <PhArrowDown v-if="column.sortMode===2" />
+                    <PhArrowsDownUp v-if="column.sortMode===0" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -27,17 +29,26 @@
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      :class="column.sortMode===1?'bg-gray-200':''"
+                      @click="column.sortMode!==1?column.sortMode=1:column.sortMode=0"
+                    >
                       <PhArrowUp/>
                       Asc
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      :class="column.sortMode===2?'bg-gray-200':''"
+                      @click="column.sortMode!==2?column.sortMode=2:column.sortMode=0"
+                    >
                       <PhArrowDown/>
                       Dec
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
+              <Button variant="ghost" v-else>
+                {{ column.label }}
+              </Button>
             </TableHead>
             <TableHead v-if="actions"/>
           </TableRow>
@@ -147,7 +158,7 @@
 
 <script setup lang="ts">
 import { Table, TableHeader, TableRow, TableCell, TableHead, TableBody } from "../ui/table"
-import { PhArrowDown, PhArrowUp, PhTrash } from "@phosphor-icons/vue";
+import {PhArrowDown, PhArrowsDownUp, PhArrowUp, PhTrash} from "@phosphor-icons/vue";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -179,6 +190,12 @@ const visibleColumns = computed(() => localColumns.value.filter((x:ColumnType)=>
 
 const localData = computed(() => {
   let res = props.data;
+  localColumns.value.forEach((column: ColumnType) => {
+    if (column.sortMode && column.sortMode === 1)
+      res.sort((a:any, b:any) => a[column.value].localeCompare(b[column.value]));
+    if (column.sortMode && column.sortMode === 2)
+      res.sort((a:any, b:any) => b[column.value].localeCompare(a[column.value]));
+  });
   const needle = textFilter.value.toLowerCase();
   if (needle)
     res = props.data.filter((obj:any) =>
