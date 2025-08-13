@@ -27,19 +27,19 @@
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarGroup
-              v-for="group in new Set(navMenu.map(x=>x.group))"
+              v-for="group in new Set(navMenu.map(x => x.group))"
               :key="group"
             >
               <SidebarGroupLabel>
                 {{ group }}
               </SidebarGroupLabel>
               <SidebarMenuItem
-                v-for="(nav, indexGroup) in navMenu.filter(x=>x.group === group)"
+                v-for="(nav, indexGroup) in navMenu.filter(x => x.group === group)"
                 :key="indexGroup"
               >
                 <SidebarMenuButton asChild>
                   <a :href="nav.url">
-                    <component :is="icons[nav.icon]" />
+                    <component :is="nav.icon" />
                     <span>{{ nav.title}} </span>
                   </a>
                 </SidebarMenuButton>
@@ -55,25 +55,24 @@
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
-                v-if="useAuthStore().user"
                 size="lg"
                 class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
                 <Avatar class="h-8 w-8 rounded-lg">
                   <AvatarImage
-                    :src="useAuthStore().user.avatar"
-                    :alt="useAuthStore().user.fullName"
+                    :src="useAuthStore().user?.avatar || ''"
+                    :alt="useAuthStore().user?.fullName"
                   />
                   <AvatarFallback class="rounded-lg">
-                    {{ useAuthStore().user.fullName.split(' ').map((n) => n[0]).join('') }}
+                    {{ useAuthStore().user?.fullName.split(' ').map((n) => n[0]).join('') }}
                   </AvatarFallback>
                 </Avatar>
                 <div class="grid flex-1 text-left text-sm leading-tight">
                   <span class="truncate font-semibold">
-                    {{ useAuthStore().user.fullName }}
+                    {{ useAuthStore().user?.fullName }}
                   </span>
                   <span class="truncate text-xs">
-                    {{ useAuthStore().user.email }}
+                    {{ useAuthStore().user?.email }}
                   </span>
                 </div>
                 <PhCaretUp class="ml-auto" />
@@ -84,15 +83,15 @@
               class="w-[--reka-popper-anchor-width]"
             >
               <DropdownMenuItem>
-                <PhUserCircleGear/>
+                <PhUserCircleGear />
                 <span>Account</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <PhGearSix/>
+                <PhGearSix />
                 <span>Settings</span>
               </DropdownMenuItem>
               <DropdownMenuItem @click="logout">
-                <PhSignOut/>
+                <PhSignOut />
                 <span>Sign out</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -107,19 +106,13 @@
 <script setup lang="ts">
 import { SidebarGroupLabel, Sidebar, SidebarContent, SidebarGroup, SidebarHeader, SidebarFooter, SidebarRail, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "../ui/sidebar";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "../ui/dropdown-menu";
-import { PhCaretUp, PhFile, PhLock, PhHouse, PhImage, PhUserCircleGear, PhGearSix, PhSignOut } from "@phosphor-icons/vue";
+import { PhCaretUp, PhImage, PhUserCircleGear, PhGearSix, PhSignOut } from "@phosphor-icons/vue";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
-import { useRouter } from "vue-router";
 import { navMenu } from "../../lib/constants.ts";
+import { useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/authStore.ts";
 
 const router = useRouter();
-
-const icons = {
-  "PhFile": PhFile,
-  "PhLock": PhLock,
-  "PhHouse": PhHouse
-};
 
 const logout = () => {
   useAuthStore().logout();

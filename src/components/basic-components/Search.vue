@@ -2,7 +2,7 @@
   <SidebarMenuButton
     as-child
     tooltip="Search"
-    style="max-width: 250px"
+    class="search-w"
   >
     <Button
       variant="outline"
@@ -67,14 +67,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
 import { PhMagnifyingGlass } from "@phosphor-icons/vue";
 import { SidebarMenuButton } from "../ui/sidebar";
 import { Button } from "../ui/button";
 import { CommandDialog, CommandInput, CommandList, CommandGroup, CommandItem, CommandShortcut, CommandEmpty, CommandSeparator } from "../ui/command";
-import BaseKbd from "../basic-components/BaseKbd.vue";
+import { ref, watch } from "vue";
 import { useMagicKeys } from "@vueuse/core";
 import { useRouter } from "vue-router";
+import BaseKbd from "../basic-components/BaseKbd.vue";
 
 const router = useRouter();
 const openCommand = ref<boolean>(false);
@@ -90,7 +90,7 @@ const { Meta_K, Ctrl_K, Meta_H, Ctrl_H, Meta_E, Ctrl_E, Meta_L, Ctrl_L } = useMa
 const handleRouter = (path: string) => {
   router.push(path);
   openCommand.value = !openCommand.value;
-}
+};
 
 watch([Meta_K, Ctrl_K, Meta_H, Ctrl_H, Meta_E, Ctrl_E, Meta_L, Ctrl_L], (v) => {
   if (v[0] || v[1])
@@ -103,3 +103,9 @@ watch([Meta_K, Ctrl_K, Meta_H, Ctrl_H, Meta_E, Ctrl_E, Meta_L, Ctrl_L], (v) => {
     handleRouter('/login');
 });
 </script>
+
+<style scoped>
+.search-w {
+  max-width: 250px;
+}
+</style>

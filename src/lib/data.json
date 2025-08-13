@@ -531,5 +531,21 @@
       "phone": "+1 (836) 472-2068",
       "position": "elit"
     }
+  ],
+  "notifications": [
+    {
+      "id": "1",
+      "name": "shadcn/ui",
+      "description": "Beautifully designed components built with Radix UI and Tailwind CSS.",
+      "type": "info",
+      "date": "10/08/2025 16:01"
+    },
+    {
+      "id": "2",
+      "name": "shadcn/ui",
+      "description": "Beautifully designed components built with Radix UI and Tailwind CSS.",
+      "type": "info",
+      "date": "10/08/2025 16:01"
+    }
   ]
 }

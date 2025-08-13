@@ -5,7 +5,7 @@
         placeholder="Find by text..."
         class="h-8 w-[150px] lg:w-[250px]"
         v-model="textFilter"
-        @update:model-value="n=>updateTextFilter(n.toString())"
+        @update:model-value="n => updateTextFilter(n.toString())"
       />
       <DropdownMenu
         v-for="filter in filters"
@@ -16,10 +16,10 @@
             class="h-8 px-2 lg:px-3"
             variant="outline"
           >
-            <PhPlusCircle/>
+            <PhPlusCircle />
             {{ filter.name }}
             <Badge
-              v-for="badge in filter.values.filter((x:FilterValueType)=>x.val)"
+              v-for="badge in filter.values.filter((x:FilterValueType) => x.val)"
               :key="badge.name"
               variant="secondary"
               class="rounded-sm px-1 font-normal"
@@ -86,13 +86,13 @@
 </template>
 
 <script setup lang="ts">
-import { PhFadersHorizontal, PhPlusCircle, PhX} from "@phosphor-icons/vue";
+import { PhFadersHorizontal, PhPlusCircle, PhX } from "@phosphor-icons/vue";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { Badge } from "../../components/ui/badge";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuCheckboxItem, DropdownMenuSeparator, DropdownMenuGroup } from "../ui/dropdown-menu";
 import { ref, computed } from "vue";
-import type {ColumnType, FilterType, FilterValueType} from "../../lib/models.ts";
-import { Badge } from "../../components/ui/badge";
+import type { ColumnType, FilterType, FilterValueType } from "../../lib/models.ts";
 
 const props = defineProps<{
   columns: ColumnType[],
@@ -100,7 +100,7 @@ const props = defineProps<{
 }>();
 
 const isFiltered = computed(() =>
-  textFilter.value || props.filters.filter((x) => x.values.find(x=>x.val)).length
+  textFilter.value || props.filters.filter((x) => x.values.find(x => x.val)).length
 );
 
 const textFilter = ref('' as string);
@@ -112,7 +112,7 @@ const emit = defineEmits([
 
 const resetFilters = () => {
   textFilter.value = '';
-  updateTextFilter('')
+  updateTextFilter('');
   props.filters.forEach((filter:FilterType) => {
     filter.values.forEach((f:FilterValueType) => {
       f.val = false;

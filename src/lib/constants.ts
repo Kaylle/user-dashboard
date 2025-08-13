@@ -1,39 +1,53 @@
+import { PhBellSimple, PhFile, PhGear, PhHouse, PhLock, PhWarningOctagon } from "@phosphor-icons/vue";
+import type { Color } from "./models.ts";
+
 export const navMenu = [
   {
     title: "Home",
     url: "/",
-    icon: "PhHouse",
+    icon: PhHouse,
     group: 'Main'
   },
   {
     title: "Login",
     url: "/login",
-    icon: "PhLock",
+    icon: PhLock,
     group: 'Others'
   },
   {
     title: "Empty page",
     url: "/page",
-    icon: "PhFile",
+    icon: PhFile,
     group: 'Main'
   },
   {
     title: "Settings",
-    url: "/page",
-    icon: "PhFile",
+    url: "/settings",
+    icon: PhGear,
     group: 'Account'
   },
   {
     title: "Notifications",
     url: "/page",
-    icon: "PhFile",
+    icon: PhBellSimple,
     group: 'Account'
   },
   {
     title: "404 Error",
     url: "/page",
-    icon: "PhFile",
+    icon: PhWarningOctagon,
     group: 'Others'
+  }
+];
+
+export const settingsNavItems = [
+  {
+    title: 'Profile',
+    href: '/settings/profile'
+  },
+  {
+    title: 'Appearance',
+    href: '/settings/appearance'
   }
 ];
 
@@ -76,4 +90,19 @@ export const userColumns = [
     sortable: true,
     sortMode: 0
   }
+];
+
+export const allColors: Color[] = [
+  'zinc',
+  'rose',
+  'blue',
+  'green',
+  'orange',
+  'red',
+  'slate',
+  'stone',
+  'gray',
+  'neutral',
+  'yellow',
+  'violet',
 ];

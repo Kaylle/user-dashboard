@@ -1,3 +1,5 @@
+import type { Theme } from "./themes.ts";
+
 export interface KbdProps {
   as?: string;
   size?: 'xs' | 'sm' | 'md';
@@ -33,3 +35,22 @@ export interface FilterValueType {
   caption?: string;
   icon?: object;
 }
+
+export interface Config {
+  theme?: Theme['name'];
+  radius: number;
+}
+
+export type Color =
+  | 'zinc'
+  | 'slate'
+  | 'stone'
+  | 'gray'
+  | 'neutral'
+  | 'red'
+  | 'rose'
+  | 'orange'
+  | 'green'
+  | 'blue'
+  | 'yellow'
+  | 'violet';

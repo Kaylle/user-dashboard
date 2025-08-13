@@ -16,13 +16,12 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function login(email: string, password: string) {
-    console.log(email,password);
     if (email === 'kurkina.ee@gmail.com' && password === '1234') {
       user.value = {
         fullName: 'Kate Kaylle',
         email: 'kurkina.ee@gmail.com',
         avatar: '/icons/favicon-32x32.png',
-        phone: '',
+        phone: '+7 (996) 590-14-45',
         id: '1',
         position: 'front-end developer',
         status: 'active'

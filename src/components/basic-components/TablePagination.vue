@@ -7,8 +7,7 @@
     class="items-center"
   >
     <div class="text-sm text-muted-foreground mr-auto">
-      {{currentRows}}
-      of {{ rows }} row(s).
+      {{ currentRows }} of {{ rows }} row(s).
     </div>
     <PaginationContent v-slot="{ items }">
       <PaginationPrevious />
@@ -30,7 +29,7 @@
         </PaginationItem>
       </template>
       <PaginationEllipsis
-        v-if="pageNumber<4"
+        v-if="pageNumber < 4"
         :index="4"
       />
       <PaginationNext />

@@ -76,13 +76,13 @@ import type { UserType } from "../../lib/models.ts";
 const dataCard = computed(() => {
   return {
     totalUsers: props.employees.length,
-    activeUsers: props.employees.filter(x=>x.status==='active').length,
-    blockedUsers: props.employees.filter(x=>x.status==='blocked').length,
-    deletedUsers: props.employees.filter(x=>x.status==='deleted').length
-  }
-})
+    activeUsers: props.employees.filter(x => x.status === 'active').length,
+    blockedUsers: props.employees.filter(x => x.status === 'blocked').length,
+    deletedUsers: props.employees.filter(x => x.status === 'deleted').length
+  };
+});
 
 const props = defineProps<{
   employees: UserType[]
-}>()
+}>();
 </script>

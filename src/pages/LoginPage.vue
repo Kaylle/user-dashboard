@@ -91,9 +91,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../co
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
+import { toast } from "vue-sonner";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-import { toast } from "vue-sonner";
 import { useAuthStore } from "../stores/authStore.ts";
 
 const router = useRouter();
@@ -101,7 +101,7 @@ const router = useRouter();
 const authForm = ref({
   email: "",
   password: ""
-})
+});
 
 const login = () => {
   const isAuth = useAuthStore().login(authForm.value.email, authForm.value.password);

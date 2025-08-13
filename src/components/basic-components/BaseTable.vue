@@ -3,7 +3,7 @@
     <TableFilters
       :columns="columns"
       :filters="filters"
-      @update-text-filter="n=>textFilter=n.toString()"
+      @update-text-filter="n => textFilter=n.toString()"
       @update-column-visibility="updateColumnVisibility"
     />
     <div class="border rounded-md">
@@ -18,9 +18,9 @@
                 <DropdownMenuTrigger as-child>
                   <Button variant="ghost">
                     {{ column.label }}
-                    <PhArrowUp v-if="column.sortMode===1" />
-                    <PhArrowDown v-if="column.sortMode===2" />
-                    <PhArrowsDownUp v-if="column.sortMode===0" />
+                    <PhArrowUp v-if="column.sortMode === 1" />
+                    <PhArrowDown v-if="column.sortMode === 2" />
+                    <PhArrowsDownUp v-if="column.sortMode === 0" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -30,17 +30,17 @@
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuItem
-                      :class="column.sortMode===1?'bg-gray-200':''"
-                      @click="column.sortMode!==1?column.sortMode=1:column.sortMode=0"
+                      :class="column.sortMode === 1 ? 'bg-gray-200' : ''"
+                      @click="column.sortMode !== 1 ? column.sortMode=1 : column.sortMode=0"
                     >
-                      <PhArrowUp/>
+                      <PhArrowUp />
                       Asc
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      :class="column.sortMode===2?'bg-gray-200':''"
-                      @click="column.sortMode!==2?column.sortMode=2:column.sortMode=0"
+                      :class="column.sortMode === 2 ? 'bg-gray-200' : ''"
+                      @click="column.sortMode !== 2 ? column.sortMode=2 : column.sortMode=0"
                     >
-                      <PhArrowDown/>
+                      <PhArrowDown />
                       Dec
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
@@ -158,15 +158,15 @@
       :rows="localData.length"
       :current-rows="localData.slice(pageNumber*10, (pageNumber*10)+10).length"
       :page-number="pageNumber"
-      @update-page="(n:number)=>pageNumber=n"
+      @update-page="(n:number) => pageNumber = n"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { Table, TableHeader, TableRow, TableCell, TableHead, TableBody } from "../ui/table"
+import { Table, TableHeader, TableRow, TableCell, TableHead, TableBody } from "../ui/table";
 import { PhArrowDown, PhArrowsDownUp, PhArrowUp, PhTrash } from "@phosphor-icons/vue";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '../../components/ui/alert-dialog'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../../components/ui/alert-dialog";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuItem } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
@@ -183,7 +183,9 @@ const props = defineProps<{
   actions?: boolean;
 }>();
 
-const visibleColumns = computed(() => localColumns.value.filter((x:ColumnType)=>!!x.isVisible));
+const visibleColumns = computed(
+  () => localColumns.value.filter((x:ColumnType) => !!x.isVisible)
+);
 
 const localData = computed(() => {
   let res = [...props.data];
@@ -230,7 +232,7 @@ const onDelete = (id: string): void => {
 };
 
 const updateColumnVisibility = (column: ColumnType, val:boolean) => {
-  const res = localColumns.value.find(x=>x.value===column.value);
+  const res = localColumns.value.find(x => x.value === column.value);
   if (res) res.isVisible = val;
 };
 

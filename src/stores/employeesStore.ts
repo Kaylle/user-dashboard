@@ -5,6 +5,7 @@ import type { UserType } from "../lib/models.ts";
 
 export const useEmployeesStore = defineStore('employees', () => {
   const employees = ref([] as UserType[]);
+
   function getEmployees() {
     const res = localStorage.getItem("employees");
     if (!res) {

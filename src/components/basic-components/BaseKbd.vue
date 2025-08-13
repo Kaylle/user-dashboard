@@ -8,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import { cva } from "class-variance-authority";
 import { computed } from "vue";
+import { cva } from "class-variance-authority";
 import type { KbdProps } from "../../lib/models.ts";
 
 const props = withDefaults(defineProps<KbdProps>(), {

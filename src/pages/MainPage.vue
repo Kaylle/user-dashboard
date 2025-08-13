@@ -36,7 +36,9 @@
         <Dialog v-model:open="openPopup">
           <DialogContent class="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Edit user</DialogTitle>
+              <DialogTitle>
+                Edit user
+              </DialogTitle>
               <DialogDescription>
                 Make changes to the user here. Click save when you're done.
               </DialogDescription>
@@ -61,16 +63,36 @@
                     class="col-span-3"
                   />
                 </div>
-                <div class="grid grid-cols-4 items-center gap-4">
-  <!--                select-->
-                  <Label for="status">Status</Label>
-                  <Input
-                    required
-                    id="status"
-                    v-model="popupData.status"
-                    class="col-span-3"
-                  />
-                </div>
+                <Combobox by="label">
+                  <ComboboxAnchor as-child style="width: 100%">
+                    <div class="grid grid-cols-4 items-center gap-4">
+                      <Label for="status">Status</Label>
+                      <ComboboxTrigger as-child style="width: 100%">
+                        <Input
+                          style="width: 100%"
+                          :display-value="(val:any) => val?.label ?? ''"
+                          required
+                          id="status"
+                          class="col-span-3"
+                        />
+                      </ComboboxTrigger>
+                    </div>
+                  </ComboboxAnchor>
+                  <ComboboxList>
+                    <ComboboxGroup>
+                      <ComboboxItem
+                        v-for="status in statuses"
+                        :key="status.value"
+                        :value="status"
+                      >
+                        {{ status.label }}
+                        <ComboboxItemIndicator>
+                          <PhCheck :class="cn('ml-auto h-4 w-4')" />
+                        </ComboboxItemIndicator>
+                      </ComboboxItem>
+                    </ComboboxGroup>
+                  </ComboboxList>
+                </Combobox>
                 <div class="grid grid-cols-4 items-center gap-4">
                   <Label for="email">Email</Label>
                   <Input
@@ -109,19 +131,21 @@
 </template>
 
 <script setup lang="ts">
-import BaseTable from "../components/basic-components/BaseTable.vue";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
+import { Combobox, ComboboxAnchor, ComboboxList, ComboboxGroup, ComboboxItem, ComboboxItemIndicator } from "../components/ui/combobox";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
-import { ref, onMounted } from "vue";
 import { toast } from "vue-sonner";
-import type { FilterType, UserType } from "../lib/models.ts";
 import { userColumns } from "../lib/constants.ts";
-import StatisticSection from "../components/basic-components/StatisticSection.vue";
+import {PhCheck, PhCheckSquare, PhProhibitInset, PhTrash} from "@phosphor-icons/vue";
+import { ref, onMounted } from "vue";
 import { downloadTable } from "../lib/utils.ts";
-import { PhCheckSquare, PhProhibitInset, PhTrash } from "@phosphor-icons/vue";
 import { useEmployeesStore } from "../stores/employeesStore.ts";
+import BaseTable from "../components/basic-components/BaseTable.vue";
+import StatisticSection from "../components/basic-components/StatisticSection.vue";
+import type { FilterType, UserType } from "../lib/models.ts";
+import { cn } from "../lib/utils";
 
 const openPopup = ref(false);
 
@@ -135,6 +159,17 @@ const popupData = ref({
   phone: ''
 } as UserType);
 
+const statuses = [
+  {
+    label: "Active",
+    value: "active"
+  },
+  {
+    label: "Active",
+    value: "blocked"
+  }
+]
+
 const filters = ref([
   {
     name: 'status',
@@ -142,24 +177,24 @@ const filters = ref([
       {
         val: false,
         name: "active",
-        caption: useEmployeesStore().employees.filter(x=>x.status==='active').length.toString(),
+        caption: useEmployeesStore().employees.filter(x => x.status === 'active').length.toString(),
         icon: PhCheckSquare
       },
       {
         val: false,
         name: "blocked",
-        caption: useEmployeesStore().employees.filter(x=>x.status==='blocked').length.toString(),
+        caption: useEmployeesStore().employees.filter(x => x.status === 'blocked').length.toString(),
         icon: PhProhibitInset
       },
       {
         val: false,
         name: "deleted",
-        caption: useEmployeesStore().employees.filter(x=>x.status==='deleted').length.toString(),
+        caption: useEmployeesStore().employees.filter(x => x.status === 'deleted').length.toString(),
         icon: PhTrash
       }
     ]
   }
-] as FilterType[])
+] as FilterType[]);
 
 const downloadUserTable = () => {
   const columnsStr = userColumns.map((e) => e.label).join(";");
@@ -167,7 +202,7 @@ const downloadUserTable = () => {
     e => `${e.fullName};${e.position};${e.status};${e.email};${e.phone}`
   ).join("\n");
   downloadTable(columnsStr + "\n" + data);
-}
+};
 
 const showPopup = (row: UserType) => {
   openPopup.value = true;
@@ -176,17 +211,17 @@ const showPopup = (row: UserType) => {
 
 const save = () => {
   //validation
-  useEmployeesStore().updateEmployee(popupData.value)
+  useEmployeesStore().updateEmployee(popupData.value);
   toast('Successfully Saved!');
   openPopup.value = false;
-}
+};
 
 const deleteEmployee = (id: string) => {
   useEmployeesStore().deleteEmployees(id);
   toast('Successfully Deleted!');
-}
+};
 
 onMounted(() => {
-  useEmployeesStore().getEmployees()
-})
+  useEmployeesStore().getEmployees();
+});
 </script>
