@@ -14,4 +14,14 @@
 import { SidebarInset, SidebarProvider } from "../ui/sidebar";
 import BaseSidebar from "./BaseSidebar.vue";
 import BaseHeader from "./BaseHeader.vue";
+import { useAuthStore } from "../../stores/authStore.ts";
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+onMounted(() => {
+  const isAuth = useAuthStore().getUser();
+  if (!isAuth) router.push("/login");
+})
 </script>

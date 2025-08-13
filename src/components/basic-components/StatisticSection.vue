@@ -9,7 +9,7 @@
       </CardHeader>
       <CardContent>
         <div class="text-2xl font-bold">
-          {{ dataCard.totalUsers}}
+          {{ dataCard.totalUsers }}
         </div>
         <p class="text-xs text-muted-foreground">
           total users in the system
@@ -25,7 +25,7 @@
       </CardHeader>
       <CardContent>
         <div class="text-2xl font-bold">
-          {{ dataCard.activeUsers}}
+          {{ dataCard.activeUsers }}
         </div>
         <p class="text-xs text-muted-foreground">
           users which have access to the system
@@ -41,7 +41,7 @@
       </CardHeader>
       <CardContent>
         <div class="text-2xl font-bold">
-          {{ dataCard.blockedUsers}}
+          {{ dataCard.blockedUsers }}
         </div>
         <p class="text-xs text-muted-foreground">
           users without access, but can be unblocked
@@ -57,7 +57,7 @@
       </CardHeader>
       <CardContent>
         <div class="text-2xl font-bold">
-          {{ dataCard.deletedUsers}}
+          {{ dataCard.deletedUsers }}
         </div>
         <p class="text-xs text-muted-foreground">
           users which have been deleted
@@ -68,24 +68,21 @@
 </template>
 
 <script setup lang="ts">
-import users from "../../lib/data.json";
 import { Card, CardHeader, CardContent, CardTitle } from "../ui/card";
 import { PhCheckSquare, PhProhibitInset, PhTrash, PhUsers } from "@phosphor-icons/vue";
-import { ref, onMounted } from "vue";
+import { computed } from "vue";
+import type { UserType } from "../../lib/models.ts";
 
-const dataCard = ref({
-  totalUsers: 0,
-  activeUsers: 0,
-  blockedUsers: 0,
-  deletedUsers: 0
-});
-
-onMounted(() => {
-  dataCard.value = {
-    totalUsers: users.data.length,
-    activeUsers: users.data.filter(x=>x.status==='active').length,
-    blockedUsers: users.data.filter(x=>x.status==='blocked').length,
-    deletedUsers: users.data.filter(x=>x.status==='deleted').length
+const dataCard = computed(() => {
+  return {
+    totalUsers: props.employees.length,
+    activeUsers: props.employees.filter(x=>x.status==='active').length,
+    blockedUsers: props.employees.filter(x=>x.status==='blocked').length,
+    deletedUsers: props.employees.filter(x=>x.status==='deleted').length
   }
-});
+})
+
+const props = defineProps<{
+  employees: UserType[]
+}>()
 </script>

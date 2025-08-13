@@ -6,7 +6,9 @@
       </h2>
     </div>
     <main class="flex flex-1 flex-col gap-4 md:gap-8">
-      <StatisticSection/>
+      <StatisticSection
+        :employees="useEmployeesStore().employees"
+      />
       <div class="w-full flex flex-col items-stretch gap-4">
         <div class="flex flex-wrap items-end justify-between gap-2">
           <div>
@@ -25,10 +27,10 @@
         </div>
         <BaseTable
           actions
-          :data="users.data"
+          :data="useEmployeesStore().employees"
           :columns="userColumns"
           @row-click="showPopup"
-          uupdate-filters="(n:FilterType)=>filters.find(x=>x.name===n.name)?.values.find(x=>x.name===n.name).val=n.val"
+          @on-delete="deleteEmployee"
           :filters="filters"
         />
         <Dialog v-model:open="openPopup">
@@ -107,19 +109,19 @@
 </template>
 
 <script setup lang="ts">
-import users from "../lib/data.json";
 import BaseTable from "../components/basic-components/BaseTable.vue";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { toast } from "vue-sonner";
-import type {FilterType, UserType} from "../lib/models.ts";
+import type { FilterType, UserType } from "../lib/models.ts";
 import { userColumns } from "../lib/constants.ts";
 import StatisticSection from "../components/basic-components/StatisticSection.vue";
 import { downloadTable } from "../lib/utils.ts";
-import {PhCheckSquare, PhProhibitInset, PhTrash} from "@phosphor-icons/vue";
+import { PhCheckSquare, PhProhibitInset, PhTrash } from "@phosphor-icons/vue";
+import { useEmployeesStore } from "../stores/employeesStore.ts";
 
 const openPopup = ref(false);
 
@@ -140,19 +142,19 @@ const filters = ref([
       {
         val: false,
         name: "active",
-        caption: users.data.filter(x=>x.status==='active').length.toString(),
+        caption: useEmployeesStore().employees.filter(x=>x.status==='active').length.toString(),
         icon: PhCheckSquare
       },
       {
         val: false,
         name: "blocked",
-        caption: users.data.filter(x=>x.status==='blocked').length.toString(),
+        caption: useEmployeesStore().employees.filter(x=>x.status==='blocked').length.toString(),
         icon: PhProhibitInset
       },
       {
         val: false,
         name: "deleted",
-        caption: users.data.filter(x=>x.status==='deleted').length.toString(),
+        caption: useEmployeesStore().employees.filter(x=>x.status==='deleted').length.toString(),
         icon: PhTrash
       }
     ]
@@ -161,7 +163,7 @@ const filters = ref([
 
 const downloadUserTable = () => {
   const columnsStr = userColumns.map((e) => e.label).join(";");
-  const data = users.data.map(
+  const data = useEmployeesStore().employees.map(
     e => `${e.fullName};${e.position};${e.status};${e.email};${e.phone}`
   ).join("\n");
   downloadTable(columnsStr + "\n" + data);
@@ -174,9 +176,17 @@ const showPopup = (row: UserType) => {
 
 const save = () => {
   //validation
-  toast('Successfully Saved!', {
-    description: popupData.value,
-  });
+  useEmployeesStore().updateEmployee(popupData.value)
+  toast('Successfully Saved!');
   openPopup.value = false;
 }
+
+const deleteEmployee = (id: string) => {
+  useEmployeesStore().deleteEmployees(id);
+  toast('Successfully Deleted!');
+}
+
+onMounted(() => {
+  useEmployeesStore().getEmployees()
+})
 </script>

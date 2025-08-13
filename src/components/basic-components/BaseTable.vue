@@ -104,8 +104,11 @@
                   {{ row[cell.value] }}
                 </a>
               </TableCell>
-              <TableCell class="pl-5" v-if="actions">
-                <div class="flex items-center gap-2">
+              <TableCell
+                class="pl-5"
+                v-if="actions"
+              >
+                <div class="flex items-center gap-2 justify-end">
                   <Button
                     @click="rowClick(row)"
                     variant="outline"
@@ -127,8 +130,12 @@
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction @click="onDelete">Continue</AlertDialogAction>
+                        <AlertDialogCancel>
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction @click="onDelete(row.id)">
+                          Continue
+                        </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
@@ -158,24 +165,14 @@
 
 <script setup lang="ts">
 import { Table, TableHeader, TableRow, TableCell, TableHead, TableBody } from "../ui/table"
-import {PhArrowDown, PhArrowsDownUp, PhArrowUp, PhTrash} from "@phosphor-icons/vue";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '../../components/ui/alert-dialog'
+import { PhArrowDown, PhArrowsDownUp, PhArrowUp, PhTrash } from "@phosphor-icons/vue";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '../../components/ui/alert-dialog'
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuItem } from "../ui/dropdown-menu";
-import { ref, computed, onMounted } from "vue";
-import type {ColumnType, FilterType, FilterValueType} from "../../lib/models.ts";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
 import { Badge } from "../../components/ui/badge";
+import { ref, computed, onMounted } from "vue";
+import type { ColumnType, FilterType, FilterValueType } from "../../lib/models.ts";
 import TableFilters from "../../components/basic-components/TableFilters.vue";
 import TablePagination from "../../components/basic-components/TablePagination.vue";
 
@@ -189,8 +186,10 @@ const props = defineProps<{
 const visibleColumns = computed(() => localColumns.value.filter((x:ColumnType)=>!!x.isVisible));
 
 const localData = computed(() => {
-  let res = props.data;
+  let res = [...props.data];
   localColumns.value.forEach((column: ColumnType) => {
+    if (column.sortMode && column.sortMode === 0)
+      res = [...props.data]
     if (column.sortMode && column.sortMode === 1)
       res.sort((a:any, b:any) => a[column.value].localeCompare(b[column.value]));
     if (column.sortMode && column.sortMode === 2)
@@ -219,20 +218,21 @@ const localColumns = ref([] as ColumnType[]);
 
 const emit = defineEmits([
   'rowClick',
-  'updateFilters'
+  'onDelete'
 ]);
 
 const rowClick = (row: any): void => {
   emit("rowClick", row);
 };
 
-const onDelete = () => {
-  console.log("onDelete");
-}
+const onDelete = (id: string): void => {
+  emit("onDelete", id);
+};
 
 const updateColumnVisibility = (column: ColumnType, val:boolean) => {
-  localColumns.value.find(x=>x.value===column.value).isVisible = val;
-}
+  const res = localColumns.value.find(x=>x.value===column.value);
+  if (res) res.isVisible = val;
+};
 
 onMounted(() => {
   localColumns.value = props.columns;

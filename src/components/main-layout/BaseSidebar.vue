@@ -55,24 +55,25 @@
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
+                v-if="useAuthStore().user"
                 size="lg"
                 class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
                 <Avatar class="h-8 w-8 rounded-lg">
                   <AvatarImage
-                    :src="user.avatar"
-                    :alt="user.fullName"
+                    :src="useAuthStore().user.avatar"
+                    :alt="useAuthStore().user.fullName"
                   />
                   <AvatarFallback class="rounded-lg">
-                    {{ user.fullName.split(' ').map((n) => n[0]).join('') }}
+                    {{ useAuthStore().user.fullName.split(' ').map((n) => n[0]).join('') }}
                   </AvatarFallback>
                 </Avatar>
                 <div class="grid flex-1 text-left text-sm leading-tight">
                   <span class="truncate font-semibold">
-                    {{ user.fullName }}
+                    {{ useAuthStore().user.fullName }}
                   </span>
                   <span class="truncate text-xs">
-                    {{ user.email }}
+                    {{ useAuthStore().user.email }}
                   </span>
                 </div>
                 <PhCaretUp class="ml-auto" />
@@ -104,14 +105,13 @@
 </template>
 
 <script setup lang="ts">
-import { Sidebar, SidebarContent, SidebarGroup, SidebarHeader, SidebarFooter, SidebarRail, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "../ui/sidebar";
+import { SidebarGroupLabel, Sidebar, SidebarContent, SidebarGroup, SidebarHeader, SidebarFooter, SidebarRail, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "../ui/sidebar";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "../ui/dropdown-menu";
-import {PhCaretUp, PhFile, PhLock, PhHouse, PhImage, PhUserCircleGear, PhGearSix, PhSignOut} from "@phosphor-icons/vue";
+import { PhCaretUp, PhFile, PhLock, PhHouse, PhImage, PhUserCircleGear, PhGearSix, PhSignOut } from "@phosphor-icons/vue";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { useRouter } from "vue-router";
 import { navMenu } from "../../lib/constants.ts";
-import type {UserType} from "../../lib/models.ts";
-import {SidebarGroupLabel, SidebarSeparator} from "@/components/ui/sidebar";
+import { useAuthStore } from "../../stores/authStore.ts";
 
 const router = useRouter();
 
@@ -121,18 +121,8 @@ const icons = {
   "PhHouse": PhHouse
 };
 
-const user = {
-  fullName: 'Kate Kaylle',
-  email: 'kurkina.ee@gmail.com',
-  avatar: '/icons/favicon-32x32.png',
-  phone: '',
-  id: '1',
-  position: 'front-end developer',
-  status: 'active'
-} as UserType;
-
 const logout = () => {
-  //clear pinia
+  useAuthStore().logout();
   router.push('/login');
 };
 </script>

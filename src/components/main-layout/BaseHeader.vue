@@ -17,7 +17,7 @@
           <PhBellSimple/>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent class="mr-5" style="max-width: 90vw !important; min-width: 100px !important;">
         <DropdownMenuLabel class="flex items-center justify-between">
           <div class="text-lg">Notification</div>
           <Button variant="outline" size="sm">

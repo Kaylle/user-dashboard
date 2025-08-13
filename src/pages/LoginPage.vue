@@ -94,6 +94,7 @@ import { Label } from "../components/ui/label";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { toast } from "vue-sonner";
+import { useAuthStore } from "../stores/authStore.ts";
 
 const router = useRouter();
 
@@ -103,14 +104,16 @@ const authForm = ref({
 })
 
 const login = () => {
-  if (authForm.value.email !== 'kurkina.ee@gmail.com' || authForm.value.password !=='0000')
-    return toast.error('Error!', {
+  const isAuth = useAuthStore().login(authForm.value.email, authForm.value.password);
+  if (isAuth) {
+    toast.success('Success!', {
+      description: 'You have successfully logged in!'
+    });
+    router.push('/');
+  } else {
+    toast.error('Error!', {
       description: 'Wrong email or password!'
     });
-  //pinia
-  toast.success('Success!', {
-    description: 'You have successfully logged in!'
-  });
-  router.push('/');
+  }
 };
 </script>
