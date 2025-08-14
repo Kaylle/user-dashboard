@@ -34,7 +34,7 @@ export const navMenu = [
   },
   {
     title: "404 Error",
-    url: "/page",
+    url: "/error404",
     icon: PhWarningOctagon,
     group: 'Others'
   }

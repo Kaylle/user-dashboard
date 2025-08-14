@@ -55,7 +55,10 @@
           </template>
         </DropdownMenuGroup>
         <DropdownMenuLabel class="flex justify-center">
-          <Button variant="outline">
+          <Button
+            variant="outline"
+            @click="$router.push('/notifications')"
+          >
             Show more
           </Button>
         </DropdownMenuLabel>

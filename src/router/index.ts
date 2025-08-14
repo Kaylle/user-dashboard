@@ -4,16 +4,19 @@ import LoginPage from "../pages/LoginPage.vue";
 import EmptyPage from "../pages/EmptyPage.vue";
 import MainLayout from "../components/main-layout/MainLayout.vue";
 import SettingsPage from "../pages/SettingsPage.vue";
+import ErrorPage from "../pages/ErrorPage.vue";
 
 const routes = [
   { path: '/login', component: LoginPage },
+  { path: '/error404', component: ErrorPage },
   {
     path: '/',
     component: MainLayout,
     children: [
       { path: '/', component: MainPage },
       { path: '/page', component: EmptyPage },
-      { path: '/settings', component: SettingsPage }
+      { path: '/settings', component: SettingsPage },
+      { path: '/notifications', component: EmptyPage }
     ]
   }
 ];

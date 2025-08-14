@@ -63,36 +63,49 @@
                     class="col-span-3"
                   />
                 </div>
-                <Combobox by="label">
-                  <ComboboxAnchor as-child style="width: 100%">
-                    <div class="grid grid-cols-4 items-center gap-4">
-                      <Label for="status">Status</Label>
-                      <ComboboxTrigger as-child style="width: 100%">
-                        <Input
-                          style="width: 100%"
-                          :display-value="(val:any) => val?.label ?? ''"
-                          required
-                          id="status"
-                          class="col-span-3"
-                        />
-                      </ComboboxTrigger>
-                    </div>
-                  </ComboboxAnchor>
-                  <ComboboxList>
-                    <ComboboxGroup>
-                      <ComboboxItem
-                        v-for="status in statuses"
-                        :key="status.value"
-                        :value="status"
-                      >
-                        {{ status.label }}
-                        <ComboboxItemIndicator>
-                          <PhCheck :class="cn('ml-auto h-4 w-4')" />
-                        </ComboboxItemIndicator>
-                      </ComboboxItem>
-                    </ComboboxGroup>
-                  </ComboboxList>
-                </Combobox>
+                <FormField name="status">
+                  <FormItem>
+                    <Combobox by="label" v-model="popupData.status">
+                      <FormControl>
+                        <ComboboxAnchor class="w-full">
+                          <div class="grid grid-cols-4 items-center gap-4">
+                            <FormLabel for="status">Status</FormLabel>
+                            <div class="col-span-3">
+                              <ComboboxTrigger class="w-full">
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  class="justify-between w-full"
+                                >
+                                  {{ popupData.status ?? 'Select status' }}
+                                  <PhCaretUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                              </ComboboxTrigger>
+                            </div>
+                          </div>
+                        </ComboboxAnchor>
+                      </FormControl>
+                      <ComboboxList>
+                        <ComboboxGroup>
+                          <ComboboxItem
+                            v-for="status in [
+                            'active',
+                            'blocked'
+                          ]"
+                            :key="status"
+                            :value="status"
+                            @click="popupData.status = status"
+                          >
+                            {{ status }}
+                            <ComboboxItemIndicator>
+                              <PhCheck :class="cn('ml-auto h-4 w-4')" />
+                            </ComboboxItemIndicator>
+                          </ComboboxItem>
+                        </ComboboxGroup>
+                      </ComboboxList>
+                    </Combobox>
+                  </FormItem>
+                </FormField>
                 <div class="grid grid-cols-4 items-center gap-4">
                   <Label for="email">Email</Label>
                   <Input
@@ -138,7 +151,7 @@ import { Combobox, ComboboxAnchor, ComboboxList, ComboboxGroup, ComboboxItem, Co
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
 import { toast } from "vue-sonner";
 import { userColumns } from "../lib/constants.ts";
-import {PhCheck, PhCheckSquare, PhProhibitInset, PhTrash} from "@phosphor-icons/vue";
+import {PhCaretUpDown, PhCheck, PhCheckSquare, PhProhibitInset, PhTrash} from "@phosphor-icons/vue";
 import { ref, onMounted } from "vue";
 import { downloadTable } from "../lib/utils.ts";
 import { useEmployeesStore } from "../stores/employeesStore.ts";
@@ -146,6 +159,8 @@ import BaseTable from "../components/basic-components/BaseTable.vue";
 import StatisticSection from "../components/basic-components/StatisticSection.vue";
 import type { FilterType, UserType } from "../lib/models.ts";
 import { cn } from "../lib/utils";
+import {FormControl, FormField, FormItem, FormLabel} from "@/components/ui/form";
+import {ComboboxTrigger} from "@/components/ui/combobox";
 
 const openPopup = ref(false);
 

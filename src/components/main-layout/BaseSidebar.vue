@@ -26,7 +26,7 @@
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            <SidebarGroup
+            <div
               v-for="group in new Set(navMenu.map(x => x.group))"
               :key="group"
             >
@@ -36,15 +36,17 @@
               <SidebarMenuItem
                 v-for="(nav, indexGroup) in navMenu.filter(x => x.group === group)"
                 :key="indexGroup"
+                class="rounded-md"
+                :class="nav.url === $route.path ? 'bg-accent' : ''"
               >
-                <SidebarMenuButton asChild>
-                  <a :href="nav.url">
+                <SidebarMenuButton as-child>
+                  <router-link :to="nav.url">
                     <component :is="nav.icon" />
                     <span>{{ nav.title}} </span>
-                  </a>
+                  </router-link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            </SidebarGroup>
+            </div>
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
