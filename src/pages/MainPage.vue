@@ -43,99 +43,10 @@
                 Make changes to the user here. Click save when you're done.
               </DialogDescription>
             </DialogHeader>
-            <form>
-              <div class="grid gap-4 py-4">
-                <div class="grid grid-cols-4 items-center gap-4">
-                  <Label for="name">Full name</Label>
-                  <Input
-                    required
-                    id="name"
-                    v-model="popupData.fullName"
-                    class="col-span-3"
-                  />
-                </div>
-                <div class="grid grid-cols-4 items-center gap-4">
-                  <Label for="position">Position</Label>
-                  <Input
-                    required
-                    id="position"
-                    v-model="popupData.position"
-                    class="col-span-3"
-                  />
-                </div>
-                <FormField name="status">
-                  <FormItem>
-                    <Combobox by="label" v-model="popupData.status">
-                      <FormControl>
-                        <ComboboxAnchor class="w-full">
-                          <div class="grid grid-cols-4 items-center gap-4">
-                            <FormLabel for="status">Status</FormLabel>
-                            <div class="col-span-3">
-                              <ComboboxTrigger class="w-full">
-                                <Button
-                                  type="button"
-                                  variant="outline"
-                                  class="justify-between w-full"
-                                >
-                                  {{ popupData.status ?? 'Select status' }}
-                                  <PhCaretUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                </Button>
-                              </ComboboxTrigger>
-                            </div>
-                          </div>
-                        </ComboboxAnchor>
-                      </FormControl>
-                      <ComboboxList>
-                        <ComboboxGroup>
-                          <ComboboxItem
-                            v-for="status in [
-                            'active',
-                            'blocked'
-                          ]"
-                            :key="status"
-                            :value="status"
-                            @click="popupData.status = status"
-                          >
-                            {{ status }}
-                            <ComboboxItemIndicator>
-                              <PhCheck :class="cn('ml-auto h-4 w-4')" />
-                            </ComboboxItemIndicator>
-                          </ComboboxItem>
-                        </ComboboxGroup>
-                      </ComboboxList>
-                    </Combobox>
-                  </FormItem>
-                </FormField>
-                <div class="grid grid-cols-4 items-center gap-4">
-                  <Label for="email">Email</Label>
-                  <Input
-                    required
-                    type="email"
-                    id="email"
-                    v-model="popupData.email"
-                    class="col-span-3"
-                  />
-                </div>
-                <div class="grid grid-cols-4 items-center gap-4">
-                  <Label for="phone">Phone</Label>
-                  <Input
-                    required
-                    type="tel"
-                    id="phone"
-                    v-model="popupData.phone"
-                    class="col-span-3"
-                  />
-                </div>
-              </div>
-              <DialogFooter>
-                <Button
-                  @click.prevent="save"
-                  type="submit"
-                >
-                  Save changes
-                </Button>
-              </DialogFooter>
-            </form>
+            <UserForm
+              @save="save"
+              :data="popupData"
+            />
           </DialogContent>
         </Dialog>
       </div>
@@ -145,22 +56,17 @@
 
 <script setup lang="ts">
 import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import { Combobox, ComboboxAnchor, ComboboxList, ComboboxGroup, ComboboxItem, ComboboxItemIndicator } from "../components/ui/combobox";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../components/ui/dialog";
 import { toast } from "vue-sonner";
 import { userColumns } from "../lib/constants.ts";
-import {PhCaretUpDown, PhCheck, PhCheckSquare, PhProhibitInset, PhTrash} from "@phosphor-icons/vue";
+import { PhCheckSquare, PhProhibitInset, PhTrash } from "@phosphor-icons/vue";
 import { ref, onMounted } from "vue";
 import { downloadTable } from "../lib/utils.ts";
 import { useEmployeesStore } from "../stores/employeesStore.ts";
 import BaseTable from "../components/basic-components/BaseTable.vue";
 import StatisticSection from "../components/basic-components/StatisticSection.vue";
 import type { FilterType, UserType } from "../lib/models.ts";
-import { cn } from "../lib/utils";
-import {FormControl, FormField, FormItem, FormLabel} from "@/components/ui/form";
-import {ComboboxTrigger} from "@/components/ui/combobox";
+import UserForm from "../components/basic-components/UserForm.vue";
 
 const openPopup = ref(false);
 
@@ -173,17 +79,6 @@ const popupData = ref({
   avatar: '',
   phone: ''
 } as UserType);
-
-const statuses = [
-  {
-    label: "Active",
-    value: "active"
-  },
-  {
-    label: "Active",
-    value: "blocked"
-  }
-]
 
 const filters = ref([
   {
@@ -224,9 +119,8 @@ const showPopup = (row: UserType) => {
   popupData.value = row;
 };
 
-const save = () => {
-  //validation
-  useEmployeesStore().updateEmployee(popupData.value);
+const save = (data: UserType) => {
+  useEmployeesStore().updateEmployee(data);
   toast('Successfully Saved!');
   openPopup.value = false;
 };

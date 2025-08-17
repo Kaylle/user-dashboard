@@ -22,7 +22,7 @@ export const useEmployeesStore = defineStore('employees', () => {
 
   function deleteEmployees(id: string) {
     const i = employees.value.findIndex((e) => e.id === id);
-    employees.value.splice(i, 1);
+    employees.value[i].status = "deleted";
   }
 
   function updateEmployee(employee: UserType) {

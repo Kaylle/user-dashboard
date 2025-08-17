@@ -28,7 +28,7 @@ export const navMenu = [
   },
   {
     title: "Notifications",
-    url: "/page",
+    url: "/notifications",
     icon: PhBellSimple,
     group: 'Account'
   },
