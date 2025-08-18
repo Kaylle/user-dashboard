@@ -47,9 +47,29 @@
             <BaseKbd>E</BaseKbd>
           </CommandShortcut>
         </CommandItem>
+        <CommandItem
+          value="notifications"
+          @click="handleRouter('notifications')"
+        >
+          Notifications
+          <CommandShortcut>
+            <BaseKbd>⌘</BaseKbd>
+            <BaseKbd>N</BaseKbd>
+          </CommandShortcut>
+        </CommandItem>
+        <CommandItem
+          value="settings"
+          @click="handleRouter('settings')"
+        >
+          Settings
+          <CommandShortcut>
+            <BaseKbd>⌘</BaseKbd>
+            <BaseKbd>S</BaseKbd>
+          </CommandShortcut>
+        </CommandItem>
       </CommandGroup>
       <CommandSeparator />
-      <CommandGroup heading="Authentification layout">
+      <CommandGroup heading="Base layout">
         <CommandItem
           value="login"
           @click="handleRouter('login')"
@@ -59,6 +79,17 @@
           <CommandShortcut>
             <BaseKbd>⌘</BaseKbd>
             <BaseKbd>L</BaseKbd>
+          </CommandShortcut>
+        </CommandItem>
+        <CommandItem
+          value="error"
+          @click="handleRouter('error')"
+          select
+        >
+          Error Page
+          <CommandShortcut>
+            <BaseKbd>⌘</BaseKbd>
+            <BaseKbd>R</BaseKbd>
           </CommandShortcut>
         </CommandItem>
       </CommandGroup>
