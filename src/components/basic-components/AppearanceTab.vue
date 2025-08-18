@@ -111,7 +111,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Separator } from "../../components/ui/separator";
+import { Separator } from "../../components/ui/separator";
 import { themes } from "../../lib/themes.ts";
 import { Button } from "../../components/ui/button";
 import { Label } from "../../components/ui/label";

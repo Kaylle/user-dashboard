@@ -6,7 +6,7 @@ import type { Config } from "./models.ts";
 
 export function useCustomize() {
   const config = ref({
-    theme: 'zinc',
+    theme: 'rose',
     radius: 0.5,
   } as Config);
 
