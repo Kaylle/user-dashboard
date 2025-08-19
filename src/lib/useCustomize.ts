@@ -1,7 +1,6 @@
 import { themes } from "../lib/themes";
 import { computed, ref } from "vue";
 import { useColorMode } from "@vueuse/core";
-import type { Theme } from "../lib/themes";
 import type { Config } from "./models.ts";
 
 export function useCustomize() {
@@ -19,7 +18,7 @@ export function useCustomize() {
 
   if (cache) config.value = JSON.parse(cache);
 
-  function setTheme(themeName: Theme['name']) {
+  function setTheme(themeName: string) {
     config.value.theme = themeName;
     localStorage.setItem("config", JSON.stringify(config.value));
   }
@@ -31,7 +30,8 @@ export function useCustomize() {
 
   const themePrimary = computed(() => {
     const t = themes.find(t => t.name === theme.value);
-    return `hsl(${t?.cssVars[isDark ? 'dark' : 'light'].primary})`;
+    if (t) return `hsl(${t[isDark ? 'dark' : 'light']})`;
+    else return `hsl(0,0,0)`;
   })
 
   return {

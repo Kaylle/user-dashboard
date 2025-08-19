@@ -1,5 +1,3 @@
-import type { Theme } from "./themes.ts";
-
 export interface KbdProps {
   as?: string;
   size?: 'xs' | 'sm' | 'md';
@@ -37,7 +35,7 @@ export interface FilterValueType {
 }
 
 export interface Config {
-  theme?: Theme['name'];
+  theme?: string;
   radius: number;
 }
 

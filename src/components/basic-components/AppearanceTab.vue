@@ -144,7 +144,8 @@ const setStyleRadius = () => {
 };
 
 const backgroundColor = (color: Color) => {
-  const bg = themes.find(theme => theme.name === color);
-  return `hsl(${bg?.activeColor.light})`;
+  const t = themes.find(t => t.name === color);
+  if (t) return `hsl(${t[colorMode ? 'dark' : 'light']})`;
+  else return `hsl(0,0,0)`;
 };
 </script>

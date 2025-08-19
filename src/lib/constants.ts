@@ -99,10 +99,10 @@ export const allColors: Color[] = [
   'green',
   'orange',
   'red',
-  // 'slate',
-  // 'stone',
-  // 'gray',
-  // 'neutral',
-  // 'yellow',
-  // 'violet'
+  'slate',
+  'stone',
+  'gray',
+  'neutral',
+  'yellow',
+  'violet'
 ];
