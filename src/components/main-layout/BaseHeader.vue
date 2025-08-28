@@ -74,7 +74,7 @@ import { PhBellSimple, PhCalendar, PhInfo, PhX } from "@phosphor-icons/vue";
 import { DropdownMenu, DropdownMenuLabel, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuItem } from "../../components/ui/dropdown-menu";
 import { Button } from "../../components/ui/button";
 import Search from "../basic-components/Search.vue";
-import api from "../../lib/data.json";
+import api from "@/lib/data.json";
 </script>
 
 <style scoped>

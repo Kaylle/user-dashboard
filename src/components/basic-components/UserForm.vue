@@ -100,8 +100,8 @@ import { Combobox, ComboboxAnchor, ComboboxGroup, ComboboxItem, ComboboxItemIndi
 import { Input } from "../../components/ui/input";
 import { FormControl, FormField, FormItem, FormLabel } from "../../components/ui/form";
 import { ref, onMounted } from "vue";
-import { cn } from "../../lib/utils.ts";
-import type { UserType } from "../../lib/models.ts";
+import { cn } from "@/lib/utils.ts";
+import type { UserType } from "@/lib/models.ts";
 import { toast } from "vue-sonner";
 
 const formData = ref(null as UserType | null);

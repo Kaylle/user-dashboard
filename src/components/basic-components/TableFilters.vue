@@ -92,7 +92,7 @@ import { Input } from "../ui/input";
 import { Badge } from "../../components/ui/badge";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuCheckboxItem, DropdownMenuSeparator, DropdownMenuGroup } from "../ui/dropdown-menu";
 import { ref, computed } from "vue";
-import type { ColumnType, FilterType, FilterValueType } from "../../lib/models.ts";
+import type { ColumnType, FilterType, FilterValueType } from "@/lib/models.ts";
 
 const props = defineProps<{
   columns: ColumnType[],

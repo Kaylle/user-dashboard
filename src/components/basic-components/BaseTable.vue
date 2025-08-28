@@ -172,7 +172,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLab
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
 import { Badge } from "../../components/ui/badge";
 import { ref, computed, onMounted } from "vue";
-import type { ColumnType, FilterType, FilterValueType } from "../../lib/models.ts";
+import type { ColumnType, FilterType, FilterValueType } from "@/lib/models.ts";
 import TableFilters from "../../components/basic-components/TableFilters.vue";
 import TablePagination from "../../components/basic-components/TablePagination.vue";
 

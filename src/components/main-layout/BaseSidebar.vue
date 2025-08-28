@@ -110,9 +110,9 @@ import { SidebarGroupLabel, Sidebar, SidebarContent, SidebarGroup, SidebarHeader
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "../ui/dropdown-menu";
 import { PhCaretUp, PhImage, PhUserCircleGear, PhGearSix, PhSignOut } from "@phosphor-icons/vue";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
-import { navMenu } from "../../lib/constants.ts";
+import { navMenu } from "@/lib/constants.ts";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "../../stores/authStore.ts";
+import { useAuthStore } from "@/stores/authStore.ts";
 
 const router = useRouter();
 

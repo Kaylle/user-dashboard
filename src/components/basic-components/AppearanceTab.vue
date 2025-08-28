@@ -110,11 +110,11 @@ import { Separator } from "../../components/ui/separator";
 import { Button } from "../../components/ui/button";
 import { Label } from "../../components/ui/label";
 import { PhCheck, PhMonitor, PhMoon, PhSun } from "@phosphor-icons/vue";
-import { themes } from "../../lib/constants.ts";
+import { themes } from "@/lib/constants.ts";
 import { useColorMode } from "@vueuse/core";
-import { useCustomize } from "../../lib/useCustomize.ts";
+import { useCustomize } from "@/lib/useCustomize.ts";
 import { watch } from "vue";
-import type { Color } from "../../lib/models.ts";
+import type { Color } from "@/lib/models.ts";
 
 const { theme, radius, setTheme, setRadius } = useCustomize();
 const RADII = [0, 0.25, 0.5, 0.75, 1];

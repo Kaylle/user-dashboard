@@ -71,7 +71,7 @@
 import { Card, CardHeader, CardContent, CardTitle } from "../ui/card";
 import { PhCheckSquare, PhProhibitInset, PhTrash, PhUsers } from "@phosphor-icons/vue";
 import { computed } from "vue";
-import type { UserType } from "../../lib/models.ts";
+import type { UserType } from "@/lib/models.ts";
 
 const dataCard = computed(() => {
   return {
