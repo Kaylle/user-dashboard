@@ -84,7 +84,7 @@
       </div>
     </div>
     <Button
-      type="submit"
+      type="button"
       @click="onSave"
     >
       Save changes
@@ -102,23 +102,30 @@ import { FormControl, FormField, FormItem, FormLabel } from "../../components/ui
 import { ref, onMounted } from "vue";
 import { cn } from "../../lib/utils.ts";
 import type { UserType } from "../../lib/models.ts";
+import { toast } from "vue-sonner";
 
 const formData = ref(null as UserType | null);
 
 const props = defineProps<{
-  data: UserType
+  data: UserType | null;
 }>();
 
 const emit = defineEmits([
   'save'
-])
+]);
 
 const onSave = () => {
-  //validation
+  let message = '';
+  if (!formData.value?.email || !formData.value.fullName)
+    message = 'Fields "Email" and "Name" are required';
+  if (message)
+    return toast.error('Error!', {
+      description: message
+    });
   emit("save", formData.value);
-}
+};
 
 onMounted(() => {
-  formData.value = props.data;
-})
+  if (props.data) formData.value = {...props.data};
+});
 </script>

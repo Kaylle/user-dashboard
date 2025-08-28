@@ -1,6 +1,5 @@
-import { themes } from "../lib/themes";
+import { themes } from "../lib/constants";
 import { computed, ref } from "vue";
-import { useColorMode } from "@vueuse/core";
 import type { Config } from "./models.ts";
 
 export function useCustomize() {
@@ -9,8 +8,6 @@ export function useCustomize() {
     radius: 0.5,
   } as Config);
 
-  const { value: color } = useColorMode();
-  const isDark = color === 'dark';
   const cache = localStorage.getItem("config");
   const themeClass = computed(() => `theme-${config.value.theme}`);
   const theme = computed(() => config.value.theme);
@@ -30,7 +27,7 @@ export function useCustomize() {
 
   const themePrimary = computed(() => {
     const t = themes.find(t => t.name === theme.value);
-    if (t) return `hsl(${t[isDark ? 'dark' : 'light']})`;
+    if (t) return `hsl(${t.color})`;
     else return `hsl(0,0,0)`;
   })
 
@@ -40,6 +37,6 @@ export function useCustomize() {
     setTheme,
     radius,
     setRadius,
-    themePrimary,
+    themePrimary
   };
 }

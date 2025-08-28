@@ -52,3 +52,8 @@ export type Color =
   | 'blue'
   | 'yellow'
   | 'violet';
+
+export interface Theme {
+  name: Color;
+  color: string;
+}

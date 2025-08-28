@@ -64,22 +64,15 @@ import { useAuthStore } from "../stores/authStore.ts";
 import type { UserType } from "../lib/models.ts";
 import AppearanceTab from "../components/basic-components/AppearanceTab.vue";
 import UserForm from "../components/basic-components/UserForm.vue";
+import {toast} from "vue-sonner";
 
 const activeTab = ref('Profile');
-
-const formData = ref({
-  id: "",
-  fullName: "",
-  email: "",
-  phone: "",
-  status: "",
-  position: "",
-  avatar: ""
-} as UserType);
+const formData = ref(useAuthStore().user as UserType | null);
 
 const onSave = (data: UserType) => {
-  formData.value = data;
+  formData.value = {...data};
   useAuthStore().user = data;
+  toast('Successfully Saved!');
 };
 
 onMounted(() => {

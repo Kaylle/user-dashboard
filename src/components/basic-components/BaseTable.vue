@@ -30,14 +30,14 @@
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuItem
-                      :class="column.sortMode === 1 ? 'bg-gray-200' : ''"
+                      :class="column.sortMode === 1 ? 'bg-muted' : ''"
                       @click="column.sortMode !== 1 ? column.sortMode=1 : column.sortMode=0"
                     >
                       <PhArrowUp />
                       Asc
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      :class="column.sortMode === 2 ? 'bg-gray-200' : ''"
+                      :class="column.sortMode === 2 ? 'bg-muted' : ''"
                       @click="column.sortMode !== 2 ? column.sortMode=2 : column.sortMode=0"
                     >
                       <PhArrowDown />
@@ -117,7 +117,7 @@
                   </Button>
                   <AlertDialog>
                     <AlertDialogTrigger as-child>
-                      <Button variant="destructive">
+                      <Button variant="destructive" v-if="row.status!=='deleted'">
                         <PhTrash />
                       </Button>
                     </AlertDialogTrigger>

@@ -17,27 +17,26 @@
           </Label>
           <div class="grid grid-cols-3 gap-2">
             <template
-              v-for="color in allColors"
+              v-for="color in themes"
               :key="color"
             >
               <Button
                 class="justify-start gap-2"
-                variant="outline"
-                :class="{ 'border-primary border-2': theme === color }"
-                @click="setTheme(color)"
+                :variant="theme === color.name?'default':'outline'"
+                @click="setTheme(color.name)"
               >
                 <span
-                  class="h-5 w-5 flex items-center justify-center rounded-full"
-                  :style="{ backgroundColor: backgroundColor(color) }"
+                  class="h-5 w-5 flex items-center justify-center rounded-full bg-white"
+                  :style="theme !== color.name ? { backgroundColor: backgroundColor(color.name) } : ''"
                 >
                   <PhCheck
-                    v-if="theme === color"
+                    v-if="theme === color.name"
                     :size="16"
-                    class="text-white"
+                    class="text-primary"
                   />
                 </span>
                 <span class="text-xs capitalize">
-                  {{ color }}
+                  {{ color.name }}
                 </span>
               </Button>
             </template>
@@ -54,8 +53,7 @@
             >
               <Button
                 class="justify-center gap-2"
-                variant="outline"
-                :class="{ 'border-primary border-2': radius === r }"
+                :variant="radius === r?'default':'outline'"
                 @click="setRadius(r)"
               >
                 <span class="text-xs capitalize">
@@ -72,8 +70,7 @@
           <div class="grid grid-cols-3 gap-2">
             <Button
               class="justify-center gap-2"
-              variant="outline"
-              :class="{ 'border-primary border-2': colorMode === 'light' }"
+              :variant="colorMode === 'light'?'default':'outline'"
               @click="colorMode = 'light'"
             >
               <PhSun :size="16" weight="bold" />
@@ -83,8 +80,7 @@
             </Button>
             <Button
               class="justify-center gap-2"
-              variant="outline"
-              :class="{ 'border-primary border-2': colorMode === 'dark' }"
+              :variant="colorMode === 'dark'?'default':'outline'"
               @click="colorMode = 'dark'"
             >
               <PhMoon :size="16" />
@@ -94,8 +90,7 @@
             </Button>
             <Button
               class="justify-center gap-2"
-              variant="outline"
-              :class="{ 'border-primary border-2': colorMode === 'auto' }"
+              :variant="colorMode === 'auto'?'default':'outline'"
               @click="colorMode = 'auto'"
             >
               <PhMonitor :size="16" />
@@ -112,11 +107,10 @@
 
 <script setup lang="ts">
 import { Separator } from "../../components/ui/separator";
-import { themes } from "../../lib/themes.ts";
 import { Button } from "../../components/ui/button";
 import { Label } from "../../components/ui/label";
 import { PhCheck, PhMonitor, PhMoon, PhSun } from "@phosphor-icons/vue";
-import { allColors } from "../../lib/constants.ts";
+import { themes } from "../../lib/constants.ts";
 import { useColorMode } from "@vueuse/core";
 import { useCustomize } from "../../lib/useCustomize.ts";
 import { watch } from "vue";
@@ -135,7 +129,7 @@ watch(radius, () => {
 });
 
 const setClassTheme = () => {
-  document.body.classList.remove(...allColors.map(color => `theme-${color}`));
+  document.body.classList.remove(...themes.map(color => `theme-${color.name}`));
   document.body.classList.add(`theme-${theme.value}`);
 };
 
@@ -145,7 +139,7 @@ const setStyleRadius = () => {
 
 const backgroundColor = (color: Color) => {
   const t = themes.find(t => t.name === color);
-  if (t) return `hsl(${t[colorMode ? 'dark' : 'light']})`;
+  if (t) return `hsl(${t.color})`;
   else return `hsl(0,0,0)`;
 };
 </script>

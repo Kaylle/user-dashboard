@@ -80,31 +80,7 @@ const popupData = ref({
   phone: ''
 } as UserType);
 
-const filters = ref([
-  {
-    name: 'status',
-    values: [
-      {
-        val: false,
-        name: "active",
-        caption: useEmployeesStore().employees.filter(x => x.status === 'active').length.toString(),
-        icon: PhCheckSquare
-      },
-      {
-        val: false,
-        name: "blocked",
-        caption: useEmployeesStore().employees.filter(x => x.status === 'blocked').length.toString(),
-        icon: PhProhibitInset
-      },
-      {
-        val: false,
-        name: "deleted",
-        caption: useEmployeesStore().employees.filter(x => x.status === 'deleted').length.toString(),
-        icon: PhTrash
-      }
-    ]
-  }
-] as FilterType[]);
+const filters = ref([] as FilterType[]);
 
 const downloadUserTable = () => {
   const columnsStr = userColumns.map((e) => e.label).join(";");
@@ -132,5 +108,28 @@ const deleteEmployee = (id: string) => {
 
 onMounted(() => {
   useEmployeesStore().getEmployees();
+  filters.value = [{
+    name: 'status',
+    values: [
+      {
+        val: false,
+        name: "active",
+        caption: useEmployeesStore().employees.filter(x => x.status === 'active').length.toString(),
+        icon: PhCheckSquare
+      },
+      {
+        val: false,
+        name: "blocked",
+        caption: useEmployeesStore().employees.filter(x => x.status === 'blocked').length.toString(),
+        icon: PhProhibitInset
+      },
+      {
+        val: false,
+        name: "deleted",
+        caption: useEmployeesStore().employees.filter(x => x.status === 'deleted').length.toString(),
+        icon: PhTrash
+      }
+    ]
+  }]
 });
 </script>
